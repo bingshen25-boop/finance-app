@@ -455,6 +455,25 @@ font-size: 13px; font-weight: 900; flex-shrink: 0;
 </div>
 
 <!-- ══════════════════════════════
+     PAGE: ACCOUNTS
+══════════════════════════════ -->
+
+<div class="page" id="page-accounts">
+  <div class="page-header">
+    <h1>帳戶管理</h1>
+    <p id="accounts-total-label">載入中...</p>
+  </div>
+  <div class="section">
+    <div id="accounts-list">
+      <div class="empty">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+        <p>尚未新增帳戶<br><small style="font-size:11px">點右下角 + 新增</small></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
      PAGE: SETTINGS
 ══════════════════════════════ -->
 
@@ -558,6 +577,10 @@ font-size: 13px; font-weight: 900; flex-shrink: 0;
   <button class="nav-item active" onclick="navigate('dashboard')" id="nav-dashboard">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
     <span>總覽</span>
+  </button>
+  <button class="nav-item" onclick="navigate('accounts')" id="nav-accounts">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+    <span>帳戶</span>
   </button>
   <button class="nav-item" onclick="navigate('loans')" id="nav-loans">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M12 6v6l4 2"/></svg>
@@ -791,6 +814,38 @@ font-size: 13px; font-weight: 900; flex-shrink: 0;
   </div>
 </div>
 
+<!-- ADD ACCOUNT MODAL -->
+
+<div class="modal-overlay" id="modal-account" onclick="closeModal('modal-account')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-handle"></div>
+    <h2 id="account-modal-title">新增帳戶</h2>
+    <input type="hidden" id="account-edit-id">
+    <div class="form-group">
+      <label class="form-label">銀行名稱</label>
+      <input class="form-input" id="account-name" placeholder="例：玉山銀行">
+    </div>
+    <div class="form-group">
+      <label class="form-label">帳戶類型</label>
+      <select class="form-select" id="account-type">
+        <option value="存款">活期存款</option>
+        <option value="定存">定期存款</option>
+        <option value="股票戶">股票戶</option>
+        <option value="其他">其他</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">目前餘額 (NT$)</label>
+      <input class="form-input" type="number" id="account-balance" placeholder="例：150000" inputmode="numeric" style="font-size:20px;font-family:'DM Mono',monospace;">
+    </div>
+    <div class="form-group">
+      <label class="form-label">備註（選填）</label>
+      <input class="form-input" id="account-note" placeholder="例：薪轉帳戶">
+    </div>
+    <button class="btn btn-primary" onclick="saveAccount()">儲存</button>
+  </div>
+</div>
+
 <script>
 // ══════════════════════════════
 // DATA STORE
@@ -800,6 +855,7 @@ let db = {
   holdings: [],
   dividends: [],
   cashflows: [],
+  accounts: [],
   notion: { apiKey: '', pageId: '', connected: false }
 };
 
@@ -826,7 +882,7 @@ function today() {
 // NAVIGATION
 // ══════════════════════════════
 let currentPage = 'dashboard';
-const pages = ['dashboard', 'loans', 'invest', 'cashflow', 'settings'];
+const pages = ['dashboard', 'accounts', 'loans', 'invest', 'cashflow', 'settings'];
 
 function navigate(page) {
   pages.forEach(p => {
@@ -841,7 +897,7 @@ function navigate(page) {
 }
 
 function openFab() {
-  const map = { dashboard: 'modal-cashflow', loans: 'modal-loan', invest: null, cashflow: 'modal-cashflow' };
+  const map = { dashboard: 'modal-cashflow', accounts: 'modal-account', loans: 'modal-loan', invest: null, cashflow: 'modal-cashflow' };
   if (currentPage === 'invest') {
     const activeTab = document.querySelector('#page-invest .tab.active')?.textContent;
     if (activeTab === '持股') openModal('modal-holding');
@@ -1277,6 +1333,80 @@ function renderCashflow() {
 }
 
 // ══════════════════════════════
+// ACCOUNTS
+// ══════════════════════════════
+const accountEmoji = { '存款': '🏦', '定存': '🔒', '股票戶': '📈', '其他': '💳' };
+
+function saveAccount() {
+  const editId = document.getElementById('account-edit-id').value;
+  const name = document.getElementById('account-name').value.trim();
+  const type = document.getElementById('account-type').value;
+  const balance = parseFloat(document.getElementById('account-balance').value) || 0;
+  const note = document.getElementById('account-note').value.trim();
+  if (!name) return alert('請填入銀行名稱');
+
+  if (editId) {
+    const acc = db.accounts.find(a => a.id === parseInt(editId));
+    if (acc) Object.assign(acc, { name, type, balance, note });
+  } else {
+    db.accounts.push({ id: Date.now(), name, type, balance, note });
+  }
+  saveDB();
+  closeModal('modal-account');
+  ['account-name','account-balance','account-note'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('account-edit-id').value = '';
+  renderAccounts();
+  renderDashboard();
+}
+
+function editAccount(id) {
+  const acc = db.accounts.find(a => a.id === id);
+  if (!acc) return;
+  document.getElementById('account-modal-title').textContent = '更新餘額';
+  document.getElementById('account-edit-id').value = id;
+  document.getElementById('account-name').value = acc.name;
+  document.getElementById('account-type').value = acc.type;
+  document.getElementById('account-balance').value = acc.balance;
+  document.getElementById('account-note').value = acc.note || '';
+  openModal('modal-account');
+}
+
+function deleteAccount(id) {
+  if (!confirm('確定刪除此帳戶？')) return;
+  db.accounts = db.accounts.filter(a => a.id !== id);
+  saveDB(); renderAccounts(); renderDashboard();
+}
+
+function renderAccounts() {
+  const el = document.getElementById('accounts-list');
+  const label = document.getElementById('accounts-total-label');
+  if (!db.accounts || !db.accounts.length) {
+    el.innerHTML = '<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg><p>尚未新增帳戶<br><small style="font-size:11px">點右下角 + 新增</small></p></div>';
+    label.textContent = '尚無帳戶紀錄';
+    return;
+  }
+  const total = db.accounts.reduce((s, a) => s + a.balance, 0);
+  label.textContent = `總存款 ${fmtMoney(total)}`;
+
+  el.innerHTML = db.accounts.map(a => {
+    const emoji = accountEmoji[a.type] || '🏦';
+    return `
+    <div class="card" style="display:flex;align-items:center;gap:14px;">
+      <div style="font-size:28px;">${emoji}</div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:15px;font-weight:700;">${a.name}</div>
+        <div style="font-size:12px;color:var(--text2);margin-top:2px;">${a.type}${a.note ? ' · ' + a.note : ''}</div>
+        <div style="font-family:'DM Mono',monospace;font-size:22px;color:var(--green);margin-top:6px;">${fmtMoney(a.balance)}</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <button onclick="editAccount(${a.id})" style="padding:8px 14px;border-radius:8px;background:rgba(79,140,255,.15);border:1px solid rgba(79,140,255,.25);color:var(--accent);font-size:12px;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;">更新</button>
+        <button onclick="deleteAccount(${a.id})" style="padding:8px 14px;border-radius:8px;background:none;border:1px solid var(--border);color:var(--text3);font-size:12px;cursor:pointer;font-family:'Noto Sans TC',sans-serif;">刪除</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════
 // DASHBOARD
 // ══════════════════════════════
 function renderDashboard() {
@@ -1290,14 +1420,16 @@ function renderDashboard() {
   const expense = monthCf.filter(c => c.type === 'expense').reduce((s, c) => s + c.amount, 0);
 
   const totalInvest = db.holdings.reduce((s, h) => s + h.shares * h.price, 0);
+  const totalAccounts = (db.accounts || []).reduce((s, a) => s + a.balance, 0);
   const totalDebt = db.loans.reduce((s, l) => s + l.balance, 0);
   const annualDiv = db.holdings.reduce((s, h) => s + h.shares * h.price * (h.yieldPct / 100), 0);
   const monthlyPayment = db.loans.reduce((s, l) => s + l.monthly, 0);
-  const networth = totalInvest - totalDebt;
+  const totalAssets = totalInvest + totalAccounts;
+  const networth = totalAssets - totalDebt;
 
   document.getElementById('dash-networth').textContent = fmtMoney(networth);
   document.getElementById('dash-networth').style.color = networth >= 0 ? 'var(--text)' : 'var(--red)';
-  document.getElementById('dash-assets').textContent = fmtMoney(totalInvest);
+  document.getElementById('dash-assets').textContent = fmtMoney(totalAssets);
   document.getElementById('dash-debts').textContent = fmtMoney(totalDebt);
   document.getElementById('dash-dividend').textContent = fmtMoney(annualDiv);
   document.getElementById('dash-income').textContent = fmtMoney(income);
@@ -1428,6 +1560,7 @@ function clearAllData() {
 // ══════════════════════════════
 function renderAll() {
   renderDashboard();
+  renderAccounts();
   renderLoans();
   renderInvestments();
   renderCashflow();
@@ -1500,6 +1633,8 @@ function checkAndAutoRecord() {
 // INIT
 // ══════════════════════════════
 loadDB();
+// migrate old data
+if (!db.accounts) db.accounts = [];
 // migrate old loans without paymentType
 db.loans.forEach(l => {
   if (!l.paymentType) l.paymentType = l.type === '儲蓄險借款' ? 'flexible' : 'fixed';
