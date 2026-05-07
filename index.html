@@ -629,6 +629,13 @@ font-size: 13px; font-weight: 900; flex-shrink: 0;
       </div>
     </div>
     <div class="form-group">
+      <label class="form-label">還款方式</label>
+      <select class="form-select" id="loan-payment-type">
+        <option value="fixed">固定（每月自動記錄）</option>
+        <option value="flexible">彈性（手動記錄）</option>
+      </select>
+    </div>
+    <div class="form-group">
       <label class="form-label">備註（選填）</label>
       <input class="form-input" id="loan-note" placeholder="例：2027年還清">
     </div>
@@ -874,9 +881,12 @@ function saveLoan() {
   const rate = parseFloat(document.getElementById('loan-rate').value) || 0;
   const note = document.getElementById('loan-note').value.trim();
 
+  const paymentType = document.getElementById('loan-payment-type').value;
   if (!name || !total) return alert('請填入名稱與借款總額');
 
-  db.loans.push({ id: Date.now(), name, type, total, balance, monthly, rate, note });
+  const now = new Date();
+  const initLastPaid = paymentType === 'fixed' ? `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}` : '';
+  db.loans.push({ id: Date.now(), name, type, total, balance, monthly, rate, note, paymentType, lastPaidMonth: initLastPaid });
   saveDB();
   closeModal('modal-loan');
   ['loan-name','loan-total','loan-balance','loan-monthly','loan-rate','loan-note'].forEach(id => document.getElementById(id).value = '');
@@ -912,7 +922,13 @@ function renderLoans() {
           <div style="font-size:24px;">${emoji}</div>
           <div>
             <div style="font-size:15px;font-weight:700;">${l.name}</div>
-            <span class="badge ${badge}" style="margin-top:3px;">${l.type}</span>
+            <div style="display:flex;gap:6px;align-items:center;margin-top:3px;">
+              <span class="badge ${badge}">${l.type}</span>
+              ${l.paymentType === 'fixed'
+                ? `<span style="font-size:10px;color:var(--text3);background:var(--bg3);padding:2px 8px;border-radius:20px;">🔄 每月自動</span>`
+                : `<span style="font-size:10px;color:var(--text3);background:var(--bg3);padding:2px 8px;border-radius:20px;">✋ 手動還款</span>`
+              }
+            </div>
           </div>
         </div>
         <button onclick="deleteLoan(${l.id})" style="background:none;border:none;color:var(--text3);font-size:18px;cursor:pointer;padding:4px;">×</button>
@@ -933,11 +949,27 @@ function renderLoans() {
       </div>
       ${l.note ? `<div style="margin-top:10px;font-size:12px;color:var(--text2);">📝 ${l.note}</div>` : ''}
       <div style="margin-top:14px;display:flex;gap:8px;">
-        <button onclick="openQuickPayment(${l.id})" style="flex:1;padding:11px;border-radius:10px;background:rgba(46,204,138,.15);border:1px solid rgba(46,204,138,.25);color:var(--green);font-family:'Noto Sans TC',sans-serif;font-size:13px;font-weight:700;cursor:pointer;">✅ 本期已還款</button>
+        ${l.paymentType === 'flexible'
+          ? (isPaidThisMonth(l.id)
+              ? `<button disabled style="flex:1;padding:11px;border-radius:10px;background:var(--bg3);border:1px solid var(--border);color:var(--text3);font-family:'Noto Sans TC',sans-serif;font-size:13px;font-weight:700;cursor:not-allowed;">✅ 本月已還款</button>`
+              : `<button onclick="openQuickPayment(${l.id})" style="flex:1;padding:11px;border-radius:10px;background:rgba(46,204,138,.15);border:1px solid rgba(46,204,138,.25);color:var(--green);font-family:'Noto Sans TC',sans-serif;font-size:13px;font-weight:700;cursor:pointer;">💳 本期還款</button>`)
+          : `<button onclick="openExtraPayment(${l.id})" style="flex:1;padding:11px;border-radius:10px;background:rgba(79,140,255,.12);border:1px solid rgba(79,140,255,.25);color:var(--accent);font-family:'Noto Sans TC',sans-serif;font-size:13px;font-weight:700;cursor:pointer;">➕ 額外還款</button>`
+        }
         <button onclick="openEditBalance(${l.id})" style="padding:11px 14px;border-radius:10px;background:var(--bg3);border:1px solid var(--border);color:var(--text2);font-family:'Noto Sans TC',sans-serif;font-size:13px;cursor:pointer;">修改餘額</button>
       </div>
     </div>`;
   }).join('');
+}
+
+function isPaidThisMonth(loanId) {
+  const now = new Date();
+  const thisMonth = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
+  return db.cashflows.some(c =>
+    c.category === '貸款還款' &&
+    c.note && c.note.includes('還款') &&
+    c.date.startsWith(thisMonth) &&
+    c.loanId === loanId
+  );
 }
 
 function openQuickPayment(id) {
@@ -968,8 +1000,15 @@ function confirmQuickPayment() {
     amount,
     category: '貸款還款',
     date,
-    note: `${loan.name} 還款`
+    note: `${loan.name} 還款`,
+    loanId: id
   });
+
+  // For flexible loans, update lastPaidMonth
+  if (loan.paymentType === 'flexible') {
+    const now = new Date();
+    loan.lastPaidMonth = getMonthKey(now);
+  }
 
   saveDB();
   closeModal('modal-quick-payment');
@@ -990,6 +1029,17 @@ function openEditBalance(id) {
   if (isNaN(val)) return alert('請輸入有效金額');
   loan.balance = val;
   saveDB(); renderLoans(); renderDashboard();
+}
+
+function openExtraPayment(id) {
+  const loan = db.loans.find(l => l.id === id);
+  if (!loan) return;
+  document.getElementById('qp-loan-id').value = id;
+  document.getElementById('qp-loan-name').textContent = loan.name + '（額外還款）';
+  document.getElementById('qp-amount').value = '';
+  document.getElementById('qp-date').value = today();
+  document.getElementById('qp-balance-preview').textContent = fmtMoney(loan.balance);
+  openModal('modal-quick-payment');
 }
 
 function showToast(msg) {
@@ -1392,11 +1442,72 @@ function renderAll() {
 }
 
 // ══════════════════════════════
+// AUTO RECORD FIXED LOANS
+// ══════════════════════════════
+function getMonthKey(date) {
+  return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}`;
+}
+
+function getMissedMonths(loan) {
+  if (loan.paymentType !== 'fixed' || !loan.monthly || loan.balance <= 0) return [];
+  const last = loan.lastPaidMonth;
+  if (!last) return []; // first time, skip auto-detect
+  const now = new Date();
+  const thisMonth = getMonthKey(now);
+  const missed = [];
+  let cursor = new Date(last + '-01');
+  cursor.setMonth(cursor.getMonth() + 1);
+  while (getMonthKey(cursor) <= thisMonth) {
+    missed.push(getMonthKey(cursor));
+    cursor.setMonth(cursor.getMonth() + 1);
+  }
+  return missed;
+}
+
+function checkAndAutoRecord() {
+  const fixedLoans = db.loans.filter(l => l.paymentType === 'fixed' && l.monthly > 0 && l.balance > 0 && l.lastPaidMonth);
+  let allMissed = [];
+  fixedLoans.forEach(l => {
+    const missed = getMissedMonths(l);
+    missed.forEach(m => allMissed.push({ loan: l, month: m }));
+  });
+  if (!allMissed.length) return;
+
+  const monthList = [...new Set(allMissed.map(x => x.month))].join('、');
+  const loanNames = [...new Set(allMissed.map(x => x.loan.name))].join('、');
+  const confirmed = confirm(`偵測到以下貸款有未記錄的還款：\n\n${loanNames}\n月份：${monthList}\n\n要一起補記嗎？`);
+  if (!confirmed) return;
+
+  allMissed.forEach(({ loan, month }) => {
+    loan.balance = Math.max(0, loan.balance - loan.monthly);
+    loan.lastPaidMonth = month;
+    db.cashflows.push({
+      id: Date.now() + Math.random(),
+      type: 'expense',
+      amount: loan.monthly,
+      category: '貸款還款',
+      date: month + '-01',
+      note: `${loan.name} 還款`,
+      loanId: loan.id
+    });
+  });
+  saveDB();
+  renderAll();
+  showToast(`✅ 已補記 ${allMissed.length} 筆還款紀錄`);
+}
+
+// ══════════════════════════════
 // INIT
 // ══════════════════════════════
 loadDB();
+// migrate old loans without paymentType
+db.loans.forEach(l => {
+  if (!l.paymentType) l.paymentType = l.type === '儲蓄險借款' ? 'flexible' : 'fixed';
+  if (!l.lastPaidMonth) l.lastPaidMonth = '';
+});
 renderAll();
 document.getElementById('cf-date').value = today();
+setTimeout(checkAndAutoRecord, 800);
 </script>
 
 </body>
