@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
@@ -29,246 +28,244 @@
     --radius-sm: 10px;
   }
 
-- { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-body {
-font-family: ‘Noto Sans TC’, sans-serif;
-background: var(–bg);
-color: var(–text);
-min-height: 100dvh;
-max-width: 480px;
-margin: 0 auto;
-position: relative;
-overflow-x: hidden;
-}
+  body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100dvh;
+    max-width: 480px;
+    margin: 0 auto;
+    position: relative;
+    overflow-x: hidden;
+  }
 
-/* ── PAGES ── */
-.page { display: none; padding: 0 0 90px 0; min-height: 100dvh; animation: fadeIn .2s ease; }
-.page.active { display: block; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  /* ── PAGES ── */
+  .page { display: none; padding: 0 0 90px 0; min-height: 100dvh; animation: fadeIn .2s ease; }
+  .page.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
-/* ── HEADER ── */
-.page-header {
-padding: 56px 20px 20px;
-background: linear-gradient(180deg, var(–bg2) 0%, transparent 100%);
-position: sticky; top: 0; z-index: 10;
-backdrop-filter: blur(12px);
-}
-.page-header h1 { font-size: 24px; font-weight: 900; letter-spacing: -.5px; }
-.page-header p { font-size: 13px; color: var(–text2); margin-top: 2px; }
+  /* ── HEADER ── */
+  .page-header {
+    padding: 56px 20px 20px;
+    background: linear-gradient(180deg, var(--bg2) 0%, transparent 100%);
+    position: sticky; top: 0; z-index: 10;
+    backdrop-filter: blur(12px);
+  }
+  .page-header h1 { font-size: 24px; font-weight: 900; letter-spacing: -.5px; }
+  .page-header p { font-size: 13px; color: var(--text2); margin-top: 2px; }
 
-/* ── BOTTOM NAV ── */
-.bottom-nav {
-position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
-width: 100%; max-width: 480px;
-background: rgba(20, 23, 32, 0.95);
-backdrop-filter: blur(20px);
-border-top: 1px solid var(–border);
-display: flex; z-index: 100;
-padding-bottom: env(safe-area-inset-bottom);
-}
-.nav-item {
-flex: 1; display: flex; flex-direction: column; align-items: center;
-padding: 10px 0 8px; cursor: pointer; transition: all .2s;
-border: none; background: none; color: var(–text3);
-}
-.nav-item.active { color: var(–accent); }
-.nav-item svg { width: 22px; height: 22px; margin-bottom: 3px; }
-.nav-item span { font-size: 10px; font-weight: 500; }
+  /* ── BOTTOM NAV ── */
+  .bottom-nav {
+    position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 100%; max-width: 480px;
+    background: rgba(20, 23, 32, 0.95);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border);
+    display: flex; z-index: 100;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .nav-item {
+    flex: 1; display: flex; flex-direction: column; align-items: center;
+    padding: 10px 0 8px; cursor: pointer; transition: all .2s;
+    border: none; background: none; color: var(--text3);
+  }
+  .nav-item.active { color: var(--accent); }
+  .nav-item svg { width: 22px; height: 22px; margin-bottom: 3px; }
+  .nav-item span { font-size: 10px; font-weight: 500; }
 
-/* ── CARDS ── */
-.section { padding: 0 16px; margin-bottom: 16px; }
-.card {
-background: var(–card);
-border-radius: var(–radius);
-padding: 18px;
-border: 1px solid var(–border);
-margin-bottom: 12px;
-}
-.card-title { font-size: 11px; font-weight: 700; color: var(–text2); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
-.big-number { font-family: ‘DM Mono’, monospace; font-size: 32px; font-weight: 500; letter-spacing: -1px; }
-.sub-label { font-size: 12px; color: var(–text2); margin-top: 4px; }
+  /* ── CARDS ── */
+  .section { padding: 0 16px; margin-bottom: 16px; }
+  .card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 18px;
+    border: 1px solid var(--border);
+    margin-bottom: 12px;
+  }
+  .card-title { font-size: 11px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+  .big-number { font-family: 'DM Mono', monospace; font-size: 32px; font-weight: 500; letter-spacing: -1px; }
+  .sub-label { font-size: 12px; color: var(--text2); margin-top: 4px; }
 
-/* ── DASHBOARD GRID ── */
-.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.mini-card {
-background: var(–card);
-border-radius: var(–radius-sm);
-padding: 14px;
-border: 1px solid var(–border);
-}
-.mini-card .label { font-size: 11px; color: var(–text2); margin-bottom: 6px; }
-.mini-card .value { font-family: ‘DM Mono’, monospace; font-size: 18px; font-weight: 500; }
-.mini-card .value.green { color: var(–green); }
-.mini-card .value.red { color: var(–red); }
-.mini-card .value.yellow { color: var(–yellow); }
-.mini-card .value.blue { color: var(–accent); }
+  /* ── DASHBOARD GRID ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .mini-card {
+    background: var(--card);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    border: 1px solid var(--border);
+  }
+  .mini-card .label { font-size: 11px; color: var(--text2); margin-bottom: 6px; }
+  .mini-card .value { font-family: 'DM Mono', monospace; font-size: 18px; font-weight: 500; }
+  .mini-card .value.green { color: var(--green); }
+  .mini-card .value.red { color: var(--red); }
+  .mini-card .value.yellow { color: var(--yellow); }
+  .mini-card .value.blue { color: var(--accent); }
 
-/* ── BADGE ── */
-.badge {
-display: inline-block; padding: 3px 10px; border-radius: 20px;
-font-size: 11px; font-weight: 700;
-}
-.badge-green { background: rgba(46,204,138,.15); color: var(–green); }
-.badge-red { background: rgba(255,95,109,.15); color: var(–red); }
-.badge-blue { background: rgba(79,140,255,.15); color: var(–accent); }
-.badge-yellow { background: rgba(255,201,71,.15); color: var(–yellow); }
-.badge-purple { background: rgba(124,92,252,.15); color: var(–accent2); }
+  /* ── BADGE ── */
+  .badge {
+    display: inline-block; padding: 3px 10px; border-radius: 20px;
+    font-size: 11px; font-weight: 700;
+  }
+  .badge-green { background: rgba(46,204,138,.15); color: var(--green); }
+  .badge-red { background: rgba(255,95,109,.15); color: var(--red); }
+  .badge-blue { background: rgba(79,140,255,.15); color: var(--accent); }
+  .badge-yellow { background: rgba(255,201,71,.15); color: var(--yellow); }
+  .badge-purple { background: rgba(124,92,252,.15); color: var(--accent2); }
 
-/* ── LIST ITEMS ── */
-.list-item {
-display: flex; align-items: center; gap: 12px;
-padding: 14px 0;
-border-bottom: 1px solid var(–border);
-}
-.list-item:last-child { border-bottom: none; padding-bottom: 0; }
-.list-icon {
-width: 40px; height: 40px; border-radius: 12px;
-display: flex; align-items: center; justify-content: center;
-font-size: 18px; flex-shrink: 0;
-}
-.list-info { flex: 1; min-width: 0; }
-.list-info .name { font-size: 14px; font-weight: 700; }
-.list-info .desc { font-size: 12px; color: var(–text2); margin-top: 2px; }
-.list-amount { font-family: ‘DM Mono’, monospace; font-size: 15px; font-weight: 500; text-align: right; }
-.list-amount .sub { font-size: 11px; color: var(–text2); }
+  /* ── LIST ITEMS ── */
+  .list-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .list-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .list-icon {
+    width: 40px; height: 40px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .list-info { flex: 1; min-width: 0; }
+  .list-info .name { font-size: 14px; font-weight: 700; }
+  .list-info .desc { font-size: 12px; color: var(--text2); margin-top: 2px; }
+  .list-amount { font-family: 'DM Mono', monospace; font-size: 15px; font-weight: 500; text-align: right; }
+  .list-amount .sub { font-size: 11px; color: var(--text2); }
 
-/* ── PROGRESS BAR ── */
-.progress-wrap { margin-top: 10px; }
-.progress-bar {
-height: 6px; background: var(–bg3);
-border-radius: 10px; overflow: hidden; margin-top: 6px;
-}
-.progress-fill { height: 100%; border-radius: 10px; transition: width .6s ease; }
+  /* ── PROGRESS BAR ── */
+  .progress-wrap { margin-top: 10px; }
+  .progress-bar {
+    height: 6px; background: var(--bg3);
+    border-radius: 10px; overflow: hidden; margin-top: 6px;
+  }
+  .progress-fill { height: 100%; border-radius: 10px; transition: width .6s ease; }
 
-/* ── BUTTONS ── */
-.btn {
-display: flex; align-items: center; justify-content: center; gap: 8px;
-width: 100%; padding: 15px; border-radius: var(–radius-sm);
-font-family: ‘Noto Sans TC’, sans-serif;
-font-size: 15px; font-weight: 700;
-border: none; cursor: pointer; transition: all .15s;
-}
-.btn-primary { background: var(–accent); color: #fff; }
-.btn-primary:active { opacity: .8; transform: scale(.98); }
-.btn-secondary { background: var(–card2); color: var(–text); border: 1px solid var(–border); }
-.btn-danger { background: rgba(255,95,109,.15); color: var(–red); border: 1px solid rgba(255,95,109,.2); }
+  /* ── BUTTONS ── */
+  .btn {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    width: 100%; padding: 15px; border-radius: var(--radius-sm);
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 15px; font-weight: 700;
+    border: none; cursor: pointer; transition: all .15s;
+  }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:active { opacity: .8; transform: scale(.98); }
+  .btn-secondary { background: var(--card2); color: var(--text); border: 1px solid var(--border); }
+  .btn-danger { background: rgba(255,95,109,.15); color: var(--red); border: 1px solid rgba(255,95,109,.2); }
 
-/* ── FAB ── */
-.fab {
-position: fixed; bottom: 80px; right: 20px;
-width: 52px; height: 52px; border-radius: 16px;
-background: var(–accent);
-display: flex; align-items: center; justify-content: center;
-box-shadow: 0 8px 24px rgba(79,140,255,.4);
-border: none; cursor: pointer; z-index: 99;
-transition: all .15s;
-}
-.fab:active { transform: scale(.93); }
-.fab svg { width: 24px; height: 24px; color: #fff; }
+  /* ── FAB ── */
+  .fab {
+    position: fixed; bottom: 80px; right: 20px;
+    width: 52px; height: 52px; border-radius: 16px;
+    background: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 24px rgba(79,140,255,.4);
+    border: none; cursor: pointer; z-index: 99;
+    transition: all .15s;
+  }
+  .fab:active { transform: scale(.93); }
+  .fab svg { width: 24px; height: 24px; color: #fff; }
 
-/* ── MODAL ── */
-.modal-overlay {
-position: fixed; inset: 0; background: rgba(0,0,0,.7);
-backdrop-filter: blur(4px);
-z-index: 200; display: none; align-items: flex-end;
-}
-.modal-overlay.open { display: flex; }
-.modal {
-background: var(–bg2); width: 100%; max-width: 480px; margin: 0 auto;
-border-radius: 24px 24px 0 0;
-padding: 20px 20px calc(20px + env(safe-area-inset-bottom));
-animation: slideUp .25s ease;
-}
-@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-.modal-handle { width: 36px; height: 4px; background: var(–border); border-radius: 10px; margin: 0 auto 20px; }
-.modal h2 { font-size: 18px; font-weight: 900; margin-bottom: 20px; }
+  /* ── MODAL ── */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,.7);
+    backdrop-filter: blur(4px);
+    z-index: 200; display: none; align-items: flex-end;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--bg2); width: 100%; max-width: 480px; margin: 0 auto;
+    border-radius: 24px 24px 0 0;
+    padding: 20px 20px calc(20px + env(safe-area-inset-bottom));
+    animation: slideUp .25s ease;
+  }
+  @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  .modal-handle { width: 36px; height: 4px; background: var(--border); border-radius: 10px; margin: 0 auto 20px; }
+  .modal h2 { font-size: 18px; font-weight: 900; margin-bottom: 20px; }
 
-/* ── FORM ── */
-.form-group { margin-bottom: 14px; }
-.form-label { font-size: 12px; font-weight: 700; color: var(–text2); margin-bottom: 6px; display: block; }
-.form-input {
-width: 100%; background: var(–bg3);
-border: 1px solid var(–border); border-radius: var(–radius-sm);
-padding: 13px 14px; font-family: ‘Noto Sans TC’, sans-serif;
-font-size: 15px; color: var(–text); outline: none;
-transition: border-color .2s;
-}
-.form-input:focus { border-color: var(–accent); }
-.form-select {
-width: 100%; background: var(–bg3);
-border: 1px solid var(–border); border-radius: var(–radius-sm);
-padding: 13px 14px; font-family: ‘Noto Sans TC’, sans-serif;
-font-size: 15px; color: var(–text); outline: none;
-appearance: none;
-}
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  /* ── FORM ── */
+  .form-group { margin-bottom: 14px; }
+  .form-label { font-size: 12px; font-weight: 700; color: var(--text2); margin-bottom: 6px; display: block; }
+  .form-input {
+    width: 100%; background: var(--bg3);
+    border: 1px solid var(--border); border-radius: var(--radius-sm);
+    padding: 13px 14px; font-family: 'Noto Sans TC', sans-serif;
+    font-size: 15px; color: var(--text); outline: none;
+    transition: border-color .2s;
+  }
+  .form-input:focus { border-color: var(--accent); }
+  .form-select {
+    width: 100%; background: var(--bg3);
+    border: 1px solid var(--border); border-radius: var(--radius-sm);
+    padding: 13px 14px; font-family: 'Noto Sans TC', sans-serif;
+    font-size: 15px; color: var(--text); outline: none;
+    appearance: none;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
-/* ── SETTINGS ── */
-.settings-item {
-display: flex; align-items: center; justify-content: space-between;
-padding: 16px 0; border-bottom: 1px solid var(–border);
-}
-.settings-item:last-child { border-bottom: none; }
-.settings-label { font-size: 14px; font-weight: 700; }
-.settings-desc { font-size: 12px; color: var(–text2); margin-top: 2px; }
-.settings-input-wrap { flex: 1; margin-left: 16px; }
+  /* ── SETTINGS ── */
+  .settings-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 0; border-bottom: 1px solid var(--border);
+  }
+  .settings-item:last-child { border-bottom: none; }
+  .settings-label { font-size: 14px; font-weight: 700; }
+  .settings-desc { font-size: 12px; color: var(--text2); margin-top: 2px; }
+  .settings-input-wrap { flex: 1; margin-left: 16px; }
 
-/* ── EMPTY STATE ── */
-.empty { text-align: center; padding: 48px 20px; color: var(–text3); }
-.empty svg { width: 48px; height: 48px; margin-bottom: 12px; opacity: .3; }
-.empty p { font-size: 14px; }
+  /* ── EMPTY STATE ── */
+  .empty { text-align: center; padding: 48px 20px; color: var(--text3); }
+  .empty svg { width: 48px; height: 48px; margin-bottom: 12px; opacity: .3; }
+  .empty p { font-size: 14px; }
 
-/* ── TABS ── */
-.tabs { display: flex; gap: 8px; margin-bottom: 16px; }
-.tab {
-flex: 1; padding: 9px; border-radius: var(–radius-sm);
-background: var(–card); border: 1px solid var(–border);
-font-size: 13px; font-weight: 700; color: var(–text2);
-cursor: pointer; text-align: center; transition: all .15s;
-}
-.tab.active { background: var(–accent); border-color: var(–accent); color: #fff; }
+  /* ── TABS ── */
+  .tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+  .tab {
+    flex: 1; padding: 9px; border-radius: var(--radius-sm);
+    background: var(--card); border: 1px solid var(--border);
+    font-size: 13px; font-weight: 700; color: var(--text2);
+    cursor: pointer; text-align: center; transition: all .15s;
+  }
+  .tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
 
-/* ── CHIP ── */
-.chip-wrap { display: flex; flex-wrap: wrap; gap: 8px; }
-.chip {
-padding: 6px 14px; border-radius: 20px;
-border: 1px solid var(–border); background: var(–card);
-font-size: 13px; color: var(–text2); cursor: pointer; transition: all .15s;
-}
-.chip.active { background: rgba(79,140,255,.15); border-color: var(–accent); color: var(–accent); }
+  /* ── CHIP ── */
+  .chip-wrap { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    padding: 6px 14px; border-radius: 20px;
+    border: 1px solid var(--border); background: var(--card);
+    font-size: 13px; color: var(--text2); cursor: pointer; transition: all .15s;
+  }
+  .chip.active { background: rgba(79,140,255,.15); border-color: var(--accent); color: var(--accent); }
 
-/* ── NOTION SETUP ── */
-.setup-step {
-display: flex; gap: 14px; margin-bottom: 20px; align-items: flex-start;
-}
-.step-num {
-width: 28px; height: 28px; border-radius: 50%;
-background: var(–accent); color: #fff;
-display: flex; align-items: center; justify-content: center;
-font-size: 13px; font-weight: 900; flex-shrink: 0;
-}
-.step-content .title { font-size: 14px; font-weight: 700; }
-.step-content .desc { font-size: 13px; color: var(–text2); margin-top: 4px; line-height: 1.5; }
+  /* ── NOTION SETUP ── */
+  .setup-step {
+    display: flex; gap: 14px; margin-bottom: 20px; align-items: flex-start;
+  }
+  .step-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--accent); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 900; flex-shrink: 0;
+  }
+  .step-content .title { font-size: 14px; font-weight: 700; }
+  .step-content .desc { font-size: 13px; color: var(--text2); margin-top: 4px; line-height: 1.5; }
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 0; }
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 0; }
 
-.divider { height: 1px; background: var(–border); margin: 4px 0 16px; }
+  .divider { height: 1px; background: var(--border); margin: 4px 0 16px; }
 
-/* Investment return colors */
-.pos { color: var(–green); }
-.neg { color: var(–red); }
-.neu { color: var(–text2); }
+  /* Investment return colors */
+  .pos { color: var(--green); }
+  .neg { color: var(--red); }
+  .neu { color: var(--text2); }
 </style>
-
 </head>
 <body>
 
 <!-- ══════════════════════════════
      PAGE: DASHBOARD
 ══════════════════════════════ -->
-
 <div class="page active" id="page-dashboard">
   <div class="page-header">
     <h1>我的財務 💰</h1>
@@ -320,7 +317,6 @@ font-size: 13px; font-weight: 900; flex-shrink: 0;
   </div>
 
   <!-- Loans summary -->
-
   <div class="section">
     <div class="card">
       <div class="card-title">貸款概覽</div>
@@ -333,7 +329,6 @@ font-size: 13px; font-weight: 900; flex-shrink: 0;
   </div>
 
   <!-- Recent transactions -->
-
   <div class="section">
     <div class="card">
       <div class="card-title">最近收支</div>
@@ -347,7 +342,6 @@ font-size: 13px; font-weight: 900; flex-shrink: 0;
 <!-- ══════════════════════════════
      PAGE: LOANS
 ══════════════════════════════ -->
-
 <div class="page" id="page-loans">
   <div class="page-header">
     <h1>貸款管理</h1>
@@ -363,7 +357,6 @@ font-size: 13px; font-weight: 900; flex-shrink: 0;
 <!-- ══════════════════════════════
      PAGE: INVESTMENT
 ══════════════════════════════ -->
-
 <div class="page" id="page-invest">
   <div class="page-header">
     <h1>投資紀錄</h1>
@@ -376,52 +369,48 @@ font-size: 13px; font-weight: 900; flex-shrink: 0;
       <div class="tab" onclick="switchInvestTab('reinvest')">再投入計畫</div>
     </div>
 
-```
-<!-- Holdings tab -->
-<div id="tab-holdings">
-  <div id="holdings-list">
-    <div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg><p>尚未新增持股</p></div>
-  </div>
-</div>
-
-<!-- Dividends tab -->
-<div id="tab-dividends" style="display:none;">
-  <div id="dividends-list">
-    <div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><p>尚未記錄股利</p></div>
-  </div>
-</div>
-
-<!-- Reinvest tab -->
-<div id="tab-reinvest" style="display:none;">
-  <div class="card">
-    <div class="card-title">再投入試算</div>
-    <div class="form-group">
-      <label class="form-label">可再投入金額 (NT$)</label>
-      <input class="form-input" type="number" id="reinvest-amount" placeholder="例：10000" inputmode="numeric">
+    <!-- Holdings tab -->
+    <div id="tab-holdings">
+      <div id="holdings-list">
+        <div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg><p>尚未新增持股</p></div>
+      </div>
     </div>
-    <div class="form-group">
-      <label class="form-label">目標 ETF</label>
-      <select class="form-select" id="reinvest-etf">
-        <option value="">選擇持股...</option>
-      </select>
-    </div>
-    <div id="reinvest-result" style="display:none; margin-top:12px; padding:14px; background:var(--bg3); border-radius:var(--radius-sm);">
-      <div style="font-size:13px;color:var(--text2);">可買入股數</div>
-      <div style="font-family:'DM Mono',monospace;font-size:24px;color:var(--accent);margin-top:4px;" id="reinvest-shares">0 股</div>
-      <div style="font-size:12px;color:var(--text2);margin-top:6px;" id="reinvest-detail"></div>
-    </div>
-    <button class="btn btn-primary" style="margin-top:14px;" onclick="calcReinvest()">試算</button>
-  </div>
-</div>
-```
 
+    <!-- Dividends tab -->
+    <div id="tab-dividends" style="display:none;">
+      <div id="dividends-list">
+        <div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><p>尚未記錄股利</p></div>
+      </div>
+    </div>
+
+    <!-- Reinvest tab -->
+    <div id="tab-reinvest" style="display:none;">
+      <div class="card">
+        <div class="card-title">再投入試算</div>
+        <div class="form-group">
+          <label class="form-label">可再投入金額 (NT$)</label>
+          <input class="form-input" type="number" id="reinvest-amount" placeholder="例：10000" inputmode="numeric">
+        </div>
+        <div class="form-group">
+          <label class="form-label">目標 ETF</label>
+          <select class="form-select" id="reinvest-etf">
+            <option value="">選擇持股...</option>
+          </select>
+        </div>
+        <div id="reinvest-result" style="display:none; margin-top:12px; padding:14px; background:var(--bg3); border-radius:var(--radius-sm);">
+          <div style="font-size:13px;color:var(--text2);">可買入股數</div>
+          <div style="font-family:'DM Mono',monospace;font-size:24px;color:var(--accent);margin-top:4px;" id="reinvest-shares">0 股</div>
+          <div style="font-size:12px;color:var(--text2);margin-top:6px;" id="reinvest-detail"></div>
+        </div>
+        <button class="btn btn-primary" style="margin-top:14px;" onclick="calcReinvest()">試算</button>
+      </div>
+    </div>
   </div>
 </div>
 
 <!-- ══════════════════════════════
      PAGE: CASHFLOW
 ══════════════════════════════ -->
-
 <div class="page" id="page-cashflow">
   <div class="page-header">
     <h1>收支紀錄</h1>
@@ -439,25 +428,21 @@ font-size: 13px; font-weight: 900; flex-shrink: 0;
       </div>
     </div>
 
-```
-<div class="tabs">
-  <div class="tab active" onclick="switchCfTab('all')">全部</div>
-  <div class="tab" onclick="switchCfTab('income')">收入</div>
-  <div class="tab" onclick="switchCfTab('expense')">支出</div>
-</div>
+    <div class="tabs">
+      <div class="tab active" onclick="switchCfTab('all')">全部</div>
+      <div class="tab" onclick="switchCfTab('income')">收入</div>
+      <div class="tab" onclick="switchCfTab('expense')">支出</div>
+    </div>
 
-<div id="cashflow-list">
-  <div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20M2 12h20"/></svg><p>尚未記錄收支</p></div>
-</div>
-```
-
+    <div id="cashflow-list">
+      <div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20M2 12h20"/></svg><p>尚未記錄收支</p></div>
+    </div>
   </div>
 </div>
 
 <!-- ══════════════════════════════
      PAGE: ACCOUNTS
 ══════════════════════════════ -->
-
 <div class="page" id="page-accounts">
   <div class="page-header">
     <h1>帳戶管理</h1>
@@ -476,7 +461,6 @@ font-size: 13px; font-weight: 900; flex-shrink: 0;
 <!-- ══════════════════════════════
      PAGE: SETTINGS
 ══════════════════════════════ -->
-
 <div class="page" id="page-settings">
   <div class="page-header">
     <h1>設定</h1>
@@ -487,92 +471,91 @@ font-size: 13px; font-weight: 900; flex-shrink: 0;
     <div class="card">
       <div class="card-title">Notion 同步設定</div>
 
-```
-  <div id="notion-status-connected" style="display:none; margin-bottom:16px;">
-    <div style="display:flex;align-items:center;gap:8px; padding:12px; background:rgba(46,204,138,.1); border-radius:10px; border:1px solid rgba(46,204,138,.2);">
-      <span style="font-size:18px;">✅</span>
-      <div>
-        <div style="font-size:13px;font-weight:700;color:var(--green);">已連線</div>
-        <div style="font-size:12px;color:var(--text2);" id="notion-db-name">資料庫名稱</div>
+      <div id="notion-status-connected" style="display:none; margin-bottom:16px;">
+        <div style="display:flex;align-items:center;justify-content:space-between; padding:12px; background:rgba(46,204,138,.1); border-radius:10px; border:1px solid rgba(46,204,138,.2);">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span style="font-size:18px;">✅</span>
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--green);">已連線</div>
+              <div style="font-size:12px;color:var(--text2);" id="notion-db-name">資料庫名稱</div>
+            </div>
+          </div>
+          <button onclick="manualSync()" style="padding:8px 14px;border-radius:8px;background:rgba(79,140,255,.15);border:1px solid rgba(79,140,255,.25);color:var(--accent);font-size:12px;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;">立即同步</button>
+        </div>
+      </div>
+
+      <div id="notion-setup-steps">
+        <div class="setup-step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <div class="title">建立 Notion Integration</div>
+            <div class="desc">前往 notion.so/my-integrations，點「New integration」建立一個，取得 API Key（secret_xxxx）</div>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <div class="title">建立 Notion 頁面</div>
+            <div class="desc">在 Notion 建立一個空白頁面，右上角「...」→「Connect to」→ 選你剛建立的 integration</div>
+          </div>
+        </div>
+        <div class="setup-step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <div class="title">貼上 API Key 與 Page ID</div>
+            <div class="desc">Page ID 是頁面網址最後一段（32碼英數字）</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Notion API Key</label>
+        <input class="form-input" type="password" id="notion-api-key" placeholder="secret_xxxxxxxxxx">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Notion Page ID</label>
+        <input class="form-input" type="text" id="notion-page-id" placeholder="32碼英數字">
+      </div>
+      <button class="btn btn-primary" onclick="saveNotionSettings()">儲存並初始化資料庫</button>
+      <div id="notion-msg" style="margin-top:10px;font-size:13px;color:var(--text2);text-align:center;"></div>
+    </div>
+
+    <!-- Data management -->
+    <div class="card">
+      <div class="card-title">資料管理</div>
+      <div class="settings-item">
+        <div>
+          <div class="settings-label">匯出資料</div>
+          <div class="settings-desc">下載 JSON 備份檔</div>
+        </div>
+        <button class="btn btn-secondary" style="width:auto;padding:8px 16px;font-size:13px;" onclick="exportData()">匯出</button>
+      </div>
+      <div class="settings-item">
+        <div>
+          <div class="settings-label">匯入資料</div>
+          <div class="settings-desc">從 JSON 備份還原</div>
+        </div>
+        <button class="btn btn-secondary" style="width:auto;padding:8px 16px;font-size:13px;" onclick="document.getElementById('import-file').click()">匯入</button>
+        <input type="file" id="import-file" accept=".json" style="display:none" onchange="importData(event)">
+      </div>
+      <div class="settings-item" style="border:none;">
+        <div>
+          <div class="settings-label" style="color:var(--red);">清除所有資料</div>
+          <div class="settings-desc">無法復原，請先備份</div>
+        </div>
+        <button class="btn btn-danger" style="width:auto;padding:8px 16px;font-size:13px;" onclick="clearAllData()">清除</button>
       </div>
     </div>
-  </div>
 
-  <div id="notion-setup-steps">
-    <div class="setup-step">
-      <div class="step-num">1</div>
-      <div class="step-content">
-        <div class="title">建立 Notion Integration</div>
-        <div class="desc">前往 notion.so/my-integrations，點「New integration」建立一個，取得 API Key（secret_xxxx）</div>
-      </div>
+    <div style="text-align:center;padding:20px 0;color:var(--text3);font-size:12px;">
+      我的財務 v1.0 · 資料存於本機
     </div>
-    <div class="setup-step">
-      <div class="step-num">2</div>
-      <div class="step-content">
-        <div class="title">建立 Notion 頁面</div>
-        <div class="desc">在 Notion 建立一個空白頁面，右上角「...」→「Connect to」→ 選你剛建立的 integration</div>
-      </div>
-    </div>
-    <div class="setup-step">
-      <div class="step-num">3</div>
-      <div class="step-content">
-        <div class="title">貼上 API Key 與 Page ID</div>
-        <div class="desc">Page ID 是頁面網址最後一段（32碼英數字）</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label class="form-label">Notion API Key</label>
-    <input class="form-input" type="password" id="notion-api-key" placeholder="secret_xxxxxxxxxx">
-  </div>
-  <div class="form-group">
-    <label class="form-label">Notion Page ID</label>
-    <input class="form-input" type="text" id="notion-page-id" placeholder="32碼英數字">
-  </div>
-  <button class="btn btn-primary" onclick="saveNotionSettings()">儲存並初始化資料庫</button>
-  <div id="notion-msg" style="margin-top:10px;font-size:13px;color:var(--text2);text-align:center;"></div>
-</div>
-
-<!-- Data management -->
-<div class="card">
-  <div class="card-title">資料管理</div>
-  <div class="settings-item">
-    <div>
-      <div class="settings-label">匯出資料</div>
-      <div class="settings-desc">下載 JSON 備份檔</div>
-    </div>
-    <button class="btn btn-secondary" style="width:auto;padding:8px 16px;font-size:13px;" onclick="exportData()">匯出</button>
-  </div>
-  <div class="settings-item">
-    <div>
-      <div class="settings-label">匯入資料</div>
-      <div class="settings-desc">從 JSON 備份還原</div>
-    </div>
-    <button class="btn btn-secondary" style="width:auto;padding:8px 16px;font-size:13px;" onclick="document.getElementById('import-file').click()">匯入</button>
-    <input type="file" id="import-file" accept=".json" style="display:none" onchange="importData(event)">
-  </div>
-  <div class="settings-item" style="border:none;">
-    <div>
-      <div class="settings-label" style="color:var(--red);">清除所有資料</div>
-      <div class="settings-desc">無法復原，請先備份</div>
-    </div>
-    <button class="btn btn-danger" style="width:auto;padding:8px 16px;font-size:13px;" onclick="clearAllData()">清除</button>
-  </div>
-</div>
-
-<div style="text-align:center;padding:20px 0;color:var(--text3);font-size:12px;">
-  我的財務 v1.0 · 資料存於本機
-</div>
-```
-
   </div>
 </div>
 
 <!-- ══════════════════════════════
      BOTTOM NAV
 ══════════════════════════════ -->
-
 <nav class="bottom-nav">
   <button class="nav-item active" onclick="navigate('dashboard')" id="nav-dashboard">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
@@ -601,7 +584,6 @@ font-size: 13px; font-weight: 900; flex-shrink: 0;
 </nav>
 
 <!-- FAB -->
-
 <button class="fab" id="fab-btn" onclick="openFab()">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
 </button>
@@ -611,7 +593,6 @@ font-size: 13px; font-weight: 900; flex-shrink: 0;
 ══════════════════════════════ -->
 
 <!-- ADD LOAN MODAL -->
-
 <div class="modal-overlay" id="modal-loan" onclick="closeModal('modal-loan')">
   <div class="modal" onclick="event.stopPropagation()">
     <div class="modal-handle"></div>
@@ -667,7 +648,6 @@ font-size: 13px; font-weight: 900; flex-shrink: 0;
 </div>
 
 <!-- QUICK PAYMENT MODAL -->
-
 <div class="modal-overlay" id="modal-quick-payment" onclick="closeModal('modal-quick-payment')">
   <div class="modal" onclick="event.stopPropagation()">
     <div class="modal-handle"></div>
@@ -693,7 +673,6 @@ font-size: 13px; font-weight: 900; flex-shrink: 0;
 </div>
 
 <!-- ADD HOLDING MODAL -->
-
 <div class="modal-overlay" id="modal-holding" onclick="closeModal('modal-holding')">
   <div class="modal" onclick="event.stopPropagation()">
     <div class="modal-handle"></div>
@@ -733,7 +712,6 @@ font-size: 13px; font-weight: 900; flex-shrink: 0;
 </div>
 
 <!-- ADD DIVIDEND MODAL -->
-
 <div class="modal-overlay" id="modal-dividend" onclick="closeModal('modal-dividend')">
   <div class="modal" onclick="event.stopPropagation()">
     <div class="modal-handle"></div>
@@ -768,7 +746,6 @@ font-size: 13px; font-weight: 900; flex-shrink: 0;
 </div>
 
 <!-- ADD CASHFLOW MODAL -->
-
 <div class="modal-overlay" id="modal-cashflow" onclick="closeModal('modal-cashflow')">
   <div class="modal" onclick="event.stopPropagation()">
     <div class="modal-handle"></div>
@@ -815,7 +792,6 @@ font-size: 13px; font-weight: 900; flex-shrink: 0;
 </div>
 
 <!-- ADD ACCOUNT MODAL -->
-
 <div class="modal-overlay" id="modal-account" onclick="closeModal('modal-account')">
   <div class="modal" onclick="event.stopPropagation()">
     <div class="modal-handle"></div>
@@ -866,7 +842,7 @@ function loadDB() {
 
 function saveDB() {
   localStorage.setItem('financeDB', JSON.stringify(db));
-  syncToNotion();
+  syncToNotion(); // async, runs in background
 }
 
 function fmtMoney(n) {
@@ -1480,8 +1456,285 @@ function renderDashboard() {
 }
 
 // ══════════════════════════════
-// NOTION SYNC
+// NOTION SYNC (真正雙向同步)
 // ══════════════════════════════
+
+const NOTION_PROXY = 'https://api.anthropic.com/v1/messages';
+
+function notionHeaders() {
+  return {
+    'Authorization': `Bearer ${db.notion.apiKey}`,
+    'Content-Type': 'application/json',
+    'Notion-Version': '2022-06-28'
+  };
+}
+
+async function notionReq(method, path, body) {
+  const resp = await fetch('https://api.notion.com' + path, {
+    method,
+    headers: notionHeaders(),
+    body: body ? JSON.stringify(body) : undefined
+  });
+  return resp.json();
+}
+
+// 建立或取得資料庫
+async function getOrCreateDB(title, parentPageId, properties) {
+  // 搜尋現有資料庫
+  const search = await notionReq('POST', '/v1/search', {
+    query: title,
+    filter: { property: 'object', value: 'database' }
+  });
+  const found = search.results?.find(r => r.title?.[0]?.plain_text === title);
+  if (found) return found.id;
+
+  // 建立新資料庫
+  const created = await notionReq('POST', '/v1/databases', {
+    parent: { type: 'page_id', page_id: parentPageId },
+    title: [{ type: 'text', text: { content: title } }],
+    properties
+  });
+  return created.id;
+}
+
+// 初始化所有資料庫
+async function initNotionDatabases() {
+  const pid = db.notion.pageId;
+  const msg = document.getElementById('notion-msg');
+  msg.textContent = '⏳ 正在建立 Notion 資料庫...';
+  msg.style.color = 'var(--yellow)';
+
+  try {
+    const loanDbId = await getOrCreateDB('💳 貸款', pid, {
+      '名稱': { title: {} },
+      '類型': { rich_text: {} },
+      '借款總額': { number: { format: 'number' } },
+      '剩餘餘額': { number: { format: 'number' } },
+      '月付金額': { number: { format: 'number' } },
+      '年利率': { number: { format: 'number' } },
+      '還款方式': { rich_text: {} },
+      '上次付款月': { rich_text: {} },
+      '備註': { rich_text: {} },
+      'localId': { rich_text: {} }
+    });
+
+    const accountDbId = await getOrCreateDB('🏦 帳戶', pid, {
+      '名稱': { title: {} },
+      '類型': { rich_text: {} },
+      '餘額': { number: { format: 'number' } },
+      '備註': { rich_text: {} },
+      'localId': { rich_text: {} }
+    });
+
+    const holdingDbId = await getOrCreateDB('📈 投資', pid, {
+      '代號': { title: {} },
+      '名稱': { rich_text: {} },
+      '股數': { number: { format: 'number' } },
+      '平均成本': { number: { format: 'number' } },
+      '現價': { number: { format: 'number' } },
+      '殖利率': { number: { format: 'number' } },
+      'localId': { rich_text: {} }
+    });
+
+    const cashflowDbId = await getOrCreateDB('💸 收支', pid, {
+      '分類': { title: {} },
+      '類型': { rich_text: {} },
+      '金額': { number: { format: 'number' } },
+      '日期': { date: {} },
+      '備註': { rich_text: {} },
+      'localId': { rich_text: {} }
+    });
+
+    db.notion.loanDbId = loanDbId;
+    db.notion.accountDbId = accountDbId;
+    db.notion.holdingDbId = holdingDbId;
+    db.notion.cashflowDbId = cashflowDbId;
+    db.notion.connected = true;
+    db.notion.lastSync = new Date().toISOString();
+    localStorage.setItem('financeDB', JSON.stringify(db));
+
+    msg.textContent = '✅ Notion 資料庫建立成功！正在上傳資料...';
+    msg.style.color = 'var(--green)';
+
+    await pushAllToNotion();
+
+    msg.textContent = '✅ 同步完成！所有資料已上傳至 Notion。';
+    document.getElementById('notion-status-connected').style.display = 'block';
+    document.getElementById('notion-db-name').textContent = '已連線 · 上次同步 ' + new Date().toLocaleTimeString('zh-TW');
+
+  } catch(e) {
+    console.error(e);
+    msg.textContent = '❌ 建立失敗：' + (e.message || '請確認 API Key 與 Page ID 正確');
+    msg.style.color = 'var(--red)';
+  }
+}
+
+// 推送所有資料到 Notion
+async function pushAllToNotion() {
+  if (!db.notion.connected || !db.notion.loanDbId) return;
+  try {
+    await Promise.all([
+      pushCollectionToNotion(db.loans, db.notion.loanDbId, loanToNotionProps),
+      pushCollectionToNotion(db.accounts, db.notion.accountDbId, accountToNotionProps),
+      pushCollectionToNotion(db.holdings, db.notion.holdingDbId, holdingToNotionProps),
+      pushCollectionToNotion(db.cashflows.slice(-200), db.notion.cashflowDbId, cashflowToNotionProps)
+    ]);
+  } catch(e) { console.log('Push error:', e); }
+}
+
+async function pushCollectionToNotion(items, dbId, propsFunc) {
+  // Get existing pages
+  const existing = await notionReq('POST', '/v1/databases/' + dbId + '/query', {});
+  const existingMap = {};
+  (existing.results || []).forEach(p => {
+    const lid = p.properties?.localId?.rich_text?.[0]?.plain_text;
+    if (lid) existingMap[lid] = p.id;
+  });
+
+  for (const item of items) {
+    const lid = String(item.id);
+    const props = propsFunc(item);
+    if (existingMap[lid]) {
+      // Update existing
+      await notionReq('PATCH', '/v1/pages/' + existingMap[lid], { properties: props });
+    } else {
+      // Create new
+      await notionReq('POST', '/v1/pages', {
+        parent: { database_id: dbId },
+        properties: { ...props, localId: { rich_text: [{ text: { content: lid } }] } }
+      });
+    }
+  }
+}
+
+// Property mappers
+function loanToNotionProps(l) {
+  return {
+    '名稱': { title: [{ text: { content: l.name || '' } }] },
+    '類型': { rich_text: [{ text: { content: l.type || '' } }] },
+    '借款總額': { number: l.total || 0 },
+    '剩餘餘額': { number: l.balance || 0 },
+    '月付金額': { number: l.monthly || 0 },
+    '年利率': { number: l.rate || 0 },
+    '還款方式': { rich_text: [{ text: { content: l.paymentType || 'fixed' } }] },
+    '上次付款月': { rich_text: [{ text: { content: l.lastPaidMonth || '' } }] },
+    '備註': { rich_text: [{ text: { content: l.note || '' } }] }
+  };
+}
+
+function accountToNotionProps(a) {
+  return {
+    '名稱': { title: [{ text: { content: a.name || '' } }] },
+    '類型': { rich_text: [{ text: { content: a.type || '' } }] },
+    '餘額': { number: a.balance || 0 },
+    '備註': { rich_text: [{ text: { content: a.note || '' } }] }
+  };
+}
+
+function holdingToNotionProps(h) {
+  return {
+    '代號': { title: [{ text: { content: h.code || '' } }] },
+    '名稱': { rich_text: [{ text: { content: h.name || '' } }] },
+    '股數': { number: h.shares || 0 },
+    '平均成本': { number: h.cost || 0 },
+    '現價': { number: h.price || 0 },
+    '殖利率': { number: h.yieldPct || 0 }
+  };
+}
+
+function cashflowToNotionProps(c) {
+  return {
+    '分類': { title: [{ text: { content: c.category || '' } }] },
+    '類型': { rich_text: [{ text: { content: c.type || '' } }] },
+    '金額': { number: c.amount || 0 },
+    '日期': { date: { start: c.date || today() } },
+    '備註': { rich_text: [{ text: { content: c.note || '' } }] }
+  };
+}
+
+// 從 Notion 讀取所有資料
+async function pullFromNotion() {
+  if (!db.notion.connected || !db.notion.loanDbId) return false;
+  const msg = document.getElementById('notion-msg');
+  try {
+    const [loans, accounts, holdings, cashflows] = await Promise.all([
+      queryNotionDB(db.notion.loanDbId),
+      queryNotionDB(db.notion.accountDbId),
+      queryNotionDB(db.notion.holdingDbId),
+      queryNotionDB(db.notion.cashflowDbId)
+    ]);
+
+    db.loans = loans.map(p => ({
+      id: parseInt(p.properties.localId?.rich_text?.[0]?.plain_text) || Date.now(),
+      name: p.properties['名稱']?.title?.[0]?.plain_text || '',
+      type: p.properties['類型']?.rich_text?.[0]?.plain_text || '',
+      total: p.properties['借款總額']?.number || 0,
+      balance: p.properties['剩餘餘額']?.number || 0,
+      monthly: p.properties['月付金額']?.number || 0,
+      rate: p.properties['年利率']?.number || 0,
+      paymentType: p.properties['還款方式']?.rich_text?.[0]?.plain_text || 'fixed',
+      lastPaidMonth: p.properties['上次付款月']?.rich_text?.[0]?.plain_text || '',
+      note: p.properties['備註']?.rich_text?.[0]?.plain_text || '',
+      notionPageId: p.id
+    }));
+
+    db.accounts = accounts.map(p => ({
+      id: parseInt(p.properties.localId?.rich_text?.[0]?.plain_text) || Date.now(),
+      name: p.properties['名稱']?.title?.[0]?.plain_text || '',
+      type: p.properties['類型']?.rich_text?.[0]?.plain_text || '',
+      balance: p.properties['餘額']?.number || 0,
+      note: p.properties['備註']?.rich_text?.[0]?.plain_text || '',
+      notionPageId: p.id
+    }));
+
+    db.holdings = holdings.map(p => ({
+      id: parseInt(p.properties.localId?.rich_text?.[0]?.plain_text) || Date.now(),
+      code: p.properties['代號']?.title?.[0]?.plain_text || '',
+      name: p.properties['名稱']?.rich_text?.[0]?.plain_text || '',
+      shares: p.properties['股數']?.number || 0,
+      cost: p.properties['平均成本']?.number || 0,
+      price: p.properties['現價']?.number || 0,
+      yieldPct: p.properties['殖利率']?.number || 0,
+      notionPageId: p.id
+    }));
+
+    db.cashflows = cashflows.map(p => ({
+      id: parseInt(p.properties.localId?.rich_text?.[0]?.plain_text) || Date.now(),
+      category: p.properties['分類']?.title?.[0]?.plain_text || '',
+      type: p.properties['類型']?.rich_text?.[0]?.plain_text || '',
+      amount: p.properties['金額']?.number || 0,
+      date: p.properties['日期']?.date?.start || today(),
+      note: p.properties['備註']?.rich_text?.[0]?.plain_text || '',
+      notionPageId: p.id
+    }));
+
+    db.notion.lastSync = new Date().toISOString();
+    localStorage.setItem('financeDB', JSON.stringify(db));
+    return true;
+  } catch(e) {
+    console.log('Pull error:', e);
+    return false;
+  }
+}
+
+async function queryNotionDB(dbId) {
+  const result = await notionReq('POST', '/v1/databases/' + dbId + '/query', { page_size: 100 });
+  return result.results || [];
+}
+
+// 每次存檔時同步到 Notion
+async function syncToNotion() {
+  if (!db.notion.connected || !db.notion.loanDbId) return;
+  try {
+    await pushAllToNotion();
+    db.notion.lastSync = new Date().toISOString();
+    localStorage.setItem('financeDB', JSON.stringify(db));
+    // Update status
+    const dbName = document.getElementById('notion-db-name');
+    if (dbName) dbName.textContent = '已連線 · 上次同步 ' + new Date().toLocaleTimeString('zh-TW');
+  } catch(e) { console.log('Sync error:', e); }
+}
+
 function saveNotionSettings() {
   const key = document.getElementById('notion-api-key').value.trim();
   const pageId = document.getElementById('notion-page-id').value.trim().replace(/-/g, '');
@@ -1491,34 +1744,31 @@ function saveNotionSettings() {
 
   db.notion.apiKey = key;
   db.notion.pageId = pageId;
-  db.notion.connected = true;
   localStorage.setItem('financeDB', JSON.stringify(db));
 
-  msg.textContent = '✅ 設定已儲存！資料將在下次更新時同步至 Notion。';
-  msg.style.color = 'var(--green)';
-
-  document.getElementById('notion-status-connected').style.display = 'block';
-  document.getElementById('notion-db-name').textContent = 'Page ID: ' + pageId.slice(0,8) + '...';
+  initNotionDatabases();
 }
 
-async function syncToNotion() {
-  if (!db.notion.connected || !db.notion.apiKey) return;
-  // Store serialized data as a Notion page update (simple text block)
-  try {
-    const body = {
-      properties: {},
-      children: [{
-        object: 'block', type: 'code',
-        code: {
-          rich_text: [{ type: 'text', text: { content: JSON.stringify(db, null, 2).slice(0, 1900) } }],
-          language: 'json'
-        }
-      }]
-    };
-    // Note: full sync would require a proper Notion database setup
-    // This is a simplified version that stores data as page content
-    console.log('Notion sync prepared (requires full setup)');
-  } catch(e) { console.log('Notion sync skipped:', e); }
+// ══════════════════════════════
+// MANUAL SYNC
+// ══════════════════════════════
+async function manualSync() {
+  const msg = document.getElementById('notion-msg');
+  const dbName = document.getElementById('notion-db-name');
+  if (!db.notion.connected || !db.notion.loanDbId) {
+    msg.textContent = '請先完成 Notion 設定';
+    return;
+  }
+  dbName.textContent = '同步中...';
+  const ok = await pullFromNotion();
+  if (ok) {
+    renderAll();
+    dbName.textContent = '已連線 · 上次同步 ' + new Date().toLocaleTimeString('zh-TW');
+    showToast('✅ 資料已從 Notion 同步');
+  } else {
+    dbName.textContent = '同步失敗，請稍後再試';
+    showToast('❌ 同步失敗');
+  }
 }
 
 // ══════════════════════════════
@@ -1640,10 +1890,39 @@ db.loans.forEach(l => {
   if (!l.paymentType) l.paymentType = l.type === '儲蓄險借款' ? 'flexible' : 'fixed';
   if (!l.lastPaidMonth) l.lastPaidMonth = '';
 });
-renderAll();
-document.getElementById('cf-date').value = today();
-setTimeout(checkAndAutoRecord, 800);
-</script>
 
+// 顯示載入畫面
+document.getElementById('page-dashboard').innerHTML += `
+  <div id="loading-overlay" style="position:fixed;inset:0;background:var(--bg);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;">
+    <div style="font-size:40px;">💰</div>
+    <div style="font-size:16px;font-weight:700;color:var(--text);">我的財務</div>
+    <div style="font-size:13px;color:var(--text2);" id="loading-msg">載入中...</div>
+  </div>`;
+
+async function initApp() {
+  const overlay = document.getElementById('loading-overlay');
+  const loadMsg = document.getElementById('loading-msg');
+
+  if (db.notion.connected && db.notion.loanDbId) {
+    loadMsg.textContent = '從 Notion 同步資料...';
+    const ok = await pullFromNotion();
+    if (ok) {
+      loadMsg.textContent = '同步完成 ✅';
+    } else {
+      loadMsg.textContent = '同步失敗，使用本地資料';
+    }
+  } else {
+    loadMsg.textContent = '使用本地資料';
+  }
+
+  await new Promise(r => setTimeout(r, 600));
+  overlay.remove();
+  renderAll();
+  document.getElementById('cf-date').value = today();
+  setTimeout(checkAndAutoRecord, 500);
+}
+
+initApp();
+</script>
 </body>
 </html>
